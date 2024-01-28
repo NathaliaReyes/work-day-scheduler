@@ -1,92 +1,139 @@
-// Wrap all code that interacts with the DOM in a call to jQuery to ensure that
-// the code isn't run until the browser has finished rendering all the elements
-// in the html.
-
-var today = dayjs();
-console.log(today);
-
-$("#currentDay").text(today.format('dddd, MMMM DD'));
-
-// Validate times
-function validateRowTime(){
-    var currentHour = today.format('H');
-    var currentAMPM = today.format('A');
-    console.log(currentHour);
-    console.log(currentAMPM);
-
-    var hourRowEl = $('.hourRow');
-    console.log(hourRowEl);
-    
-
-    hourRowEl.each(function() {
-        var fullText = $(this).text();
-        console.log(fullText);
-        var textWithoutLasTwo = fullText.slice(0,-2);
-        console.log(textWithoutLasTwo);
-        console.log(typeof(textWithoutLasTwo));
-        var lastTwoCha = fullText.slice(-2);
-        console.log(lastTwoCha); //AM or PM
-
-
-        var row = $(this).closest('.row'); // Find the closest parent with class 'row'
-
-        // Remove all classes first
-        row.removeClass('past future present');
-        
-        
-    
-        var rowHour24 = parseInt(textWithoutLasTwo);
-
-        // Convertir horas PM a formato de 24 horas sumando 12
-        if (lastTwoCha === 'PM' && rowHour24 !== 12) {
-            rowHour24 += 12;
-        }
-        /* if(parseInt(textWithoutLasTwo) < parseInt(currentHour) && currentAMPM == lastTwoCha) {
-            row.addClass('past');
-        } else if(parseInt(textWithoutLasTwo) > parseInt(currentHour) && currentAMPM == lastTwoCha) {
-            row.addClass('future');
-        } else {
-            row.addClass('present');
-        } */
-        if ((rowHour24 < parseInt(currentHour))) {
-            row.addClass('past');
-        } else if(rowHour24 > parseInt(currentHour)){
-            row.addClass('future'); 
-        } else if (rowHour24 === parseInt(currentHour) && currentAMPM === lastTwoCha) {
-            row.addClass('present');
-        }
-        
-    })
-}
-
-validateRowTime();
-
-// Create the event for the button
-$('.saveBtn').on('click', function() {
-    var id = $(this).parent().attr('id');
-    var text = $(this).siblings('textarea').val();
-    localStorage.setItem(id, text);
-});
- // Reload and still the information is saved.
-var events = JSON.parse(localStorage.getItem(id, text));
-
 $(function () {
-    // TODO: Add a listener for click events on the save button. This code should
-    // use the id in the containing time-block as a key to save the user input in
-    // local storage. HINT: What does `this` reference in the click listener
-    // function? How can DOM traversal be used to get the "hour-x" id of the
-    // time-block containing the button that was clicked? How might the id be
-    // useful when saving the description in local storage?
-    //
-    // TODO: Add code to apply the past, present, or future class to each time
-    // block by comparing the id to the current hour. HINTS: How can the id
-    // attribute of each time-block be used to conditionally add or remove the
-    // past, present, and future classes? How can Day.js be used to get the
-    // current hour in 24-hour time?
-    //
-    // TODO: Add code to get any user input that was saved in localStorage and set
-    // the values of the corresponding textarea elements. HINT: How can the id
-    // attribute of each time-block be used to do this?
-    //
-    // TODO: Add code to display the current date in the header of the page.
+    // Get the date from today
+    var today = dayjs();
+
+    // Set the date to the element with id #currentDay
+    $("#currentDay").text(today.format('dddd, MMMM DD'));
+
+    // Validate times (past,present, future)
+    function validateRowTime(){
+        // Get the current hour ejemplo: 6,7,8,9
+        var currentHour = today.format('H');
+        // Get the current format ejemplo: AM/PM
+        var currentAMPM = today.format('A');
+
+        // Get the element with the class hourRow (div)
+        var hourRowEl = $('.hourRow');
+        
+        hourRowEl.each(function() {
+            var fullText = $(this).text();
+            var textWithoutLastTwo = fullText.slice(0,-2);
+            var lastTwoCha = fullText.slice(-2);
+            //console.log(lastTwoCha); //AM or PM
+
+            // Find the closest parent with class 'row'
+            var row = $(this).closest('.row'); 
+            // Remove all classes first
+            row.removeClass('past future present');
+            
+            var rowHour24 = parseInt(textWithoutLastTwo);
+
+            // Convert hours PM to 24 hours format adding 12
+            if (lastTwoCha === 'PM' && rowHour24 !== 12) {
+                rowHour24 += 12;
+            }
+            
+            if ((rowHour24 < parseInt(currentHour))) {
+                row.addClass('past');
+            } else if(rowHour24 > parseInt(currentHour)){
+                row.addClass('future'); 
+            } else if (rowHour24 === parseInt(currentHour) && currentAMPM === lastTwoCha) {
+                row.addClass('present');
+            }
+            
+        })
+    }
+
+    validateRowTime();
+
+    var buttonSaveEl = $('.saveBtn');
+
+    buttonSaveEl.on('click', function(){
+        var id = $(this).parent().attr('id');
+        var text = $(this).siblings('textarea').val();
+        localStorage.setItem(id, text);
+
+        var events = JSON.parse(localStorage.getItem("events")) || [];
+        events.push({time: id, type: text});
+        localStorage.setItem("events", JSON.stringify(events));
+        Swal.fire({
+            title: "Event saved!",
+            text: "Your event has been successfully saved!",
+            icon: "success"
+        });
+    })
+        
+    renderEventsCalendar();
+
+    function renderEventsCalendar() {
+        var events = JSON.parse(localStorage.getItem("events")) || [];
+        // console.log(events);
+        
+        for (var i = 0; i < events.length; i++) {
+            var eventHour = events[i].time;
+            var eventText = events[i].type;
+
+            // Declare 9 variables for capturing the 9 divs:
+            var div1 = $('#hour-9');
+            var div2 = $('#hour-10');
+            var div3 = $('#hour-11');
+            var div4 = $('#hour-12');
+            var div5 = $('#hour-13');
+            var div6 = $('#hour-14');
+            var div7 = $('#hour-15');
+            var div8 = $('#hour-16');
+            var div9 = $('#hour-17');
+
+            // Compare the eventHour with the divs id and set the text to the textarea
+            // Class textAreaStyle is for styling the textarea
+            switch(eventHour) {
+                case 'hour-9':
+                    var text = div1.children('textarea');
+                    text.addClass('textAreaStyle');
+                    text.text(eventText);
+                    break;
+                case 'hour-10':
+                    var text = div2.children('textarea');
+                    text.addClass('textAreaStyle');
+                    text.text(eventText);
+                    break;
+                case 'hour-11':
+                    var text = div3.children('textarea');
+                    text.addClass('textAreaStyle');
+                    text.text(eventText);
+                    break;
+                case 'hour-12':
+                    var text = div4.children('textarea');
+                    text.addClass('textAreaStyle');
+                    text.text(eventText);
+                    break;
+                case 'hour-13':
+                    var text = div5.children('textarea');
+                    text.addClass('textAreaStyle');
+                    text.text(eventText);
+                    break;
+                case 'hour-14':
+                    var text = div6.children('textarea');
+                    text.addClass('textAreaStyle');
+                    text.text(eventText);
+                    break;
+                case 'hour-15':
+                    var text = div7.children('textarea');
+                    text.addClass('textAreaStyle');
+                    text.text(eventText);
+                    break;
+                case 'hour-16':
+                    var text = div8.children('textarea');
+                    text.addClass('textAreaStyle');
+                    text.text(eventText);
+                    break;
+                case 'hour-17':
+                    var text = div9.children('textarea');
+                    text.addClass('textAreaStyle');
+                    text.text(eventText);
+                    break;
+            }
+
+        }
+    }
   });
