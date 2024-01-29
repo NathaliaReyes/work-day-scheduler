@@ -32,7 +32,7 @@ $(function () {
             if (lastTwoCha === 'PM' && rowHour24 !== 12) {
                 rowHour24 += 12;
             }
-            
+            // Clasified the row with the correct class (past, present, future)
             if ((rowHour24 < parseInt(currentHour))) {
                 row.addClass('past');
             } else if(rowHour24 > parseInt(currentHour)){
@@ -43,32 +43,37 @@ $(function () {
             
         })
     }
-
+    // Call the function
     validateRowTime();
-
+    // Capture the button with the class saveBtn
     var buttonSaveEl = $('.saveBtn');
-
+    // Add a click event to the button
     buttonSaveEl.on('click', function(){
+        // Get the id attribute of the parent element of the button
         var id = $(this).parent().attr('id');
+        // Get the value of the textarea
         var text = $(this).siblings('textarea').val();
+        // Save the value of the id and the textarea in the local storage
         localStorage.setItem(id, text);
-
+        
         var events = JSON.parse(localStorage.getItem("events")) || [];
         events.push({time: id, type: text});
         localStorage.setItem("events", JSON.stringify(events));
+        // Alert the user that the event has been saved
         Swal.fire({
             title: "Event saved!",
             text: "Your event has been successfully saved!",
             icon: "success"
         });
     })
-        
+    
+    // Call the function
     renderEventsCalendar();
-
+    // Function to render the events saved in the local storage
     function renderEventsCalendar() {
         var events = JSON.parse(localStorage.getItem("events")) || [];
         // console.log(events);
-        
+        // Loop through the events array
         for (var i = 0; i < events.length; i++) {
             var eventHour = events[i].time;
             var eventText = events[i].type;
@@ -137,3 +142,5 @@ $(function () {
         }
     }
   });
+
+  // End of the script
