@@ -106,51 +106,41 @@ $(function () {
             var div9 = $('#hour-17');
 
             // Compare the eventHour with the divs id and set the text to the textarea
-            // Class textAreaStyle is for styling
             switch(eventHour) {
                 case 'hour-9':
                     var text = div1.children('textarea');
-                    text.addClass('textAreaStyle');
                     text.text(eventText);
                     break;
                 case 'hour-10':
                     var text = div2.children('textarea');
-                    text.addClass('textAreaStyle');
                     text.text(eventText);
                     break;
                 case 'hour-11':
                     var text = div3.children('textarea');
-                    text.addClass('textAreaStyle');
                     text.text(eventText);
                     break;
                 case 'hour-12':
                     var text = div4.children('textarea');
-                    text.addClass('textAreaStyle');
                     text.text(eventText);
                     break;
                 case 'hour-13':
                     var text = div5.children('textarea');
-                    text.addClass('textAreaStyle');
                     text.text(eventText);
                     break;
                 case 'hour-14':
                     var text = div6.children('textarea');
-                    text.addClass('textAreaStyle');
                     text.text(eventText);
                     break;
                 case 'hour-15':
                     var text = div7.children('textarea');
-                    text.addClass('textAreaStyle');
                     text.text(eventText);
                     break;
                 case 'hour-16':
                     var text = div8.children('textarea');
-                    text.addClass('textAreaStyle');
                     text.text(eventText);
                     break;
                 case 'hour-17':
                     var text = div9.children('textarea');
-                    text.addClass('textAreaStyle');
                     text.text(eventText);
                     break;
             }

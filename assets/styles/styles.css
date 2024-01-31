@@ -1,80 +1,76 @@
 body {
     font-family: 'Open Sans', sans-serif;
     font-size: 16px;
-  }
-  
-  textarea {
-    background: transparent;
-    border: none;
-    resize: none;
-    color: #000000;
-    border-left: 1px solid black;
-    padding: 10px;
-  }
-  
-  .description {
-    white-space: pre-wrap;
-  }
-  
-  .time-block {
-    border-radius: 15px;
-  }
-  
-  .row {
-    border-top: 1px solid white;
-  }
-  
-  /* Styling for the div containing the time */
-  .hour {
-    background-color: #ffffff;
-    color: #000000;
-    border-top: 1px dashed #000000;
-  }
+}
 
-  .template {
-    background-color: #c5f3f3;
-    color: white;
-  }
+/* Styling for the text area */
+textarea {
+  background: transparent;
+  border: none;
+  resize: none;
+  color: #000000;
+  border-left: 1px solid black;
+  padding: 10px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  font-family: 'Dosis', sans-serif;
+  font-family: 'Signika Negative', sans-serif;
+}
   
-  /* This class styles the time blocks that are in the past */
-  .past {
-    background-color: #d3d3d3;
-    color: white;
-  }
+.description {
+  white-space: pre-wrap;
   
-  /* This class styles the time blocks that are in the present */  
-  .present {
-    background-color: #ff6961;
-    color: white;
-  }
-  
-    /* This class styles the time blocks that are in the future */
-  .future {
-    background-color: #77dd77;
-    color: white;
-  }
-  
-  /* Button styling */
-  .saveBtn {
-    border-left: 1px solid black;
-    border-top-right-radius: 15px;
-    border-bottom-right-radius: 15px;
-    background-color: #06aed5;
-    color: white;
-  }
-  
-  /* Button hover effect */
-  .saveBtn i:hover {
-    font-size: 20px;
-    transition: all 0.3s ease-in-out;
-  }
-  
-  /* textarea styling added in the script */
-  .textAreaStyle {
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: #000000;
-    font-family: 'Dosis', sans-serif;
-    font-family: 'Signika Negative', sans-serif;
+}
 
-  }
+.time-block {
+  border-radius: 15px;
+}
+
+.row {
+  border-top: 1px solid white;
+}
+
+/* Styling for the div containing the time */
+.hour {
+  background-color: #ffffff;
+  color: #000000;
+  border-top: 1px dashed #000000;
+}
+
+.template {
+  background-color: #c5f3f3;
+  color: white;
+}
+
+/* This class styles the time blocks that are in the past */
+.past {
+  background-color: #d3d3d3;
+  color: white;
+}
+
+/* This class styles the time blocks that are in the present */  
+.present {
+  background-color: #ff6961;
+  color: white;
+}
+
+  /* This class styles the time blocks that are in the future */
+.future {
+  background-color: #77dd77;
+  color: white;
+}
+
+/* Button styling */
+.saveBtn {
+  border-left: 1px solid black;
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 15px;
+  background-color: #06aed5;
+  color: white;
+}
+
+/* Button hover effect */
+.saveBtn i:hover {
+  font-size: 20px;
+  transition: all 0.3s ease-in-out;
+}
